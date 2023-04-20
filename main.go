@@ -89,7 +89,6 @@ func main() {
 	}
 
 	//kubeconfig := os.Getenv("KUBECONFIG")
-	*kubeconfigPath = "/home/vscode/.kube/config"
 	config, err := clientcmd.BuildConfigFromFlags("", *kubeconfigPath)
 	if err != nil {
 		config, err = rest.InClusterConfig()
