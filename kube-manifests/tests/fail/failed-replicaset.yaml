@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: failed-replicaset
+  labels:
+    app: readiness-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: readiness-test
+  template:
+    metadata:
+      labels:
+        app: readiness-test
+    spec:
+      containers:
+      - name: non-existent-image
+        image: non-existent-image
+        command: ["sh", "-c", "echo 'This will not run!' && sleep 3600"]

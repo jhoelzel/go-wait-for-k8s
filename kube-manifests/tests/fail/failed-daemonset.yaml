@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: failed-daemonset
+  labels:
+    app: readiness-test
+spec:
+  selector:
+    matchLabels:
+      app: readiness-test
+  template:
+    metadata:
+      labels:
+        app: readiness-test
+    spec:
+      containers:
+      - name: non-existent-image
+        image: non-existent-image
+        command: ["sh", "-c", "echo 'This will not run!' && sleep 3600"]
+

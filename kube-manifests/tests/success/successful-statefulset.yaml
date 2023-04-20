@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: successful-statefulset
+  labels:
+    app: readiness-test
+spec:
+  serviceName: "successful-statefulset"
+  replicas: 2
+  selector:
+    matchLabels:
+      app: readiness-test
+  template:
+    metadata:
+      labels:
+        app: readiness-test
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        command: ["sh", "-c", "echo 'Hello, Kubernetes!' && sleep 3600"]
