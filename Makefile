@@ -74,7 +74,10 @@ build: clean ## build a version of the app, pass Buildversion, Comit and project
 		-o bin/${NAME} ./main.go
 
 docker-build: build ## Build the docker image and tag it with the current version and :latest
-	docker build -t ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME} -t  ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME_LATEST} -t ${IMAGE_NAME_LATEST} -t ${IMAGE_NAME} . -f ./dockerfiles/Dockerfile
+	docker build -t ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME} -t  ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME_LATEST} -t ${IMAGE_NAME_LATEST} -t ${IMAGE_NAME} . -f ./dockerfiles/Dockerfile \
+	--label "org.opencontainers.image.source="https://github.com/jhoelzel/go-wait-for-k8s" \
+	--label "org.opencontainers.image.description="Go-wait-for-k8s is a utility program written in Go that monitors the readiness of Kubernetes resources like Pods, Jobs, Deployments, StatefulSets, DaemonSets, and ReplicaSets." \
+	--label "org.opencontainers.image.licenses=MIT"
 
 docker-run: docker-build ## Build the docker image and tag it and run it in docker
 	docker stop $(IMAGE_NAME) || true && docker rm $(IMAGE_NAME) || true
