@@ -1,7 +1,7 @@
 # VERSION defines the project version for the bundle.
 # Update this value when you upgrade the version of your project.
 VERSION ?= 0.0.1
-NAME = $(shell basename "`pwd`")
+NAME = go_wait_for_k8s
 GITBASEURL = github.com/jhoelzel
 CONTAINER_REPOSITORY=ghcr.io
 ## Accountname ends in / because there are none on some registrys
