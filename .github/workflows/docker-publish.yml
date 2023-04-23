@@ -53,7 +53,7 @@ jobs:
           password: ${{ secrets.GHCR_PAT }}
 
       - name: Build the Docker image
-        run: make build VERSION=${{ steps.version_tag.outputs.VERSION }}
+        run: make docker-build VERSION=${{ steps.version_tag.outputs.VERSION }}
       - name: push the image image
         if: github.event_name != 'pull_request'
         run: make docker-push VERSION=${{ steps.version_tag.outputs.VERSION }}
