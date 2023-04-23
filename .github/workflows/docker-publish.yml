@@ -37,7 +37,7 @@ jobs:
         id: version_tag
         run: |
           git fetch --tags --force # Retrieve annotated tags. THIS TRICK REALLY HELPS
-          echo "::set-output name=VERSION::$(git for-each-ref refs/tags --sort=-taggerdate --format='%(refname:short)' --count=1)| sed -e 's/^v//"
+          echo "::set-output name=VERSION::$(git for-each-ref refs/tags --sort=-taggerdate --format='%(refname:short)' --count=1| sed -e 's/^v//)"
 
       - name: Setup Docker buildx
         uses: docker/setup-buildx-action@2a6fbda6d8bd6fe40f8b36c71fca20ffc286129e
