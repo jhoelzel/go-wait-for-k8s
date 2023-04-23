@@ -59,4 +59,6 @@ jobs:
         run: make build VERSION=${{ steps.version_tag.outputs.VERSION }}
       - name: push the image image
         if: github.event_name != 'pull_request'
-        run: make docker-push VERSION=${{ steps.version_tag.outputs.VERSION }}
+        run: |
+          VERSION=$(echo $steps.version_tag.outputs.VERSION | sed -e 's/^v//')
+          make docker-push VERSION=${{ VERSION }}
