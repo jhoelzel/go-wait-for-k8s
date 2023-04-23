@@ -13,6 +13,7 @@ jobs:
     - name: Bump version
       if: "!contains(github.event.head_commit.message, 'skip ci')"
       run: |
+        git config --global user.email "noreply@hoelzel.it"
         git fetch --tags
         set -e
         git fetch --tags # checkout action does not get these
