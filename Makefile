@@ -74,7 +74,7 @@ build: clean ## build a version of the app, pass Buildversion, Comit and project
 		-o bin/${NAME} ./main.go
 
 docker-build: build ## Build the docker image and tag it with the current version and :latest
-	docker build -t ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME} -t  ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME_LATEST} . -f ./dockerfiles/Dockerfile
+	docker build -t ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME} -t  ${CONTAINER_REPOSITORY}/${CONTAINER_REPOSITORY_ACCOUNTNAME}${IMAGE_NAME_LATEST} -t ${IMAGE_NAME_LATEST} -t ${IMAGE_NAME} . -f ./dockerfiles/Dockerfile
 
 docker-run: docker-build ## Build the docker image and tag it and run it in docker
 	docker stop $(IMAGE_NAME) || true && docker rm $(IMAGE_NAME) || true

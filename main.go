@@ -22,6 +22,7 @@ import (
 
 func main() {
 	// command-line flags and their default values
+	fmt.Printf("Starting go-wait-for-k8s")
 	var (
 		namespace          = flag.String("namespace", "", "The namespace to monitor")
 		labelSelector      = flag.String("label-selector", "", "The label selector to filter resources")

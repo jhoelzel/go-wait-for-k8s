@@ -42,6 +42,55 @@ sudo mv go-wait-for-k8s /usr/local/bin/
 This Deployment creates a single replica of the BusyBox container. The go-wait-for-k8s program runs as an init container and waits for all Deployments with the label app=readiness-test to become ready before starting the BusyBox container.
 
 ```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: go-wait-for-k8s-sa
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: go-wait-for-k8s-cluster-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - "batch"
+    resources:
+      - jobs
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - "apps"
+    resources:
+      - deployments
+      - statefulsets
+      - daemonsets
+      - replicasets
+    verbs:
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: go-wait-for-k8s-cluster-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: go-wait-for-k8s-cluster-role
+subjects:
+  - kind: ServiceAccount
+    name: go-wait-for-k8s-sa
+    namespace: default
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -56,6 +105,7 @@ spec:
       labels:
         app: busybox
     spec:
+      serviceAccountName: go-wait-for-k8s-sa
       initContainers:
         - name: go-wait-for-k8s
           image: ghcr.io/jhoelzel/go-wait-for-k8s:latest
