@@ -108,7 +108,7 @@ spec:
       serviceAccountName: go-wait-for-k8s-sa
       initContainers:
         - name: go-wait-for-k8s
-          image: ghcr.io/jhoelzel/go-wait-for-k8s:latest
+          image: ghcr.io/jhoelzel/go_wait_for_k8s:latest
           args:
             - "--label-selector=app=readiness-test"
             - "--resource-type=deployment"
